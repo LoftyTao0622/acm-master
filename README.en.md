@@ -194,6 +194,7 @@ Agents with web access should verify LeetCode matches online. Agents without web
 acm-master/
 ├── README.md             # Chinese README, displayed by default on GitHub
 ├── README.en.md          # English README
+├── LICENSE               # MIT License
 ├── SKILL.md              # Source Skill instructions used to build both platform folders
 ├── .codex/
 │   └── skills/
@@ -229,7 +230,7 @@ Use $acm-master to generate C++ ACM code and explain which data-structure fundam
 - Keep the English documentation in `README.en.md` and link it from the header language switch.
 - Publish `.codex/skills/acm-master` as the folder Codex users can use or copy directly.
 - Publish `.claude/skills/acm-master` as the folder Claude Code users can use or copy directly.
-- Add a `LICENSE` file before public distribution if you want explicit usage and redistribution terms.
+- The project is released under the MIT License, with the full text in the repository-level `LICENSE` file.
 - Before publishing, re-check that `SKILL.md` and `agents/openai.yaml` use consistent names, descriptions, and default prompts.
 
 ## Maintenance Notes
@@ -242,4 +243,4 @@ Use $acm-master to generate C++ ACM code and explain which data-structure fundam
 
 ## License
 
-This Skill directory does not currently include a standalone `LICENSE` file. Add an explicit license before public distribution or open-source release.
+This project is released under the MIT License. See [LICENSE](./LICENSE) for the full license text.

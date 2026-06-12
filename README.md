@@ -194,6 +194,7 @@ Use $acm-master to solve this algorithm problem in ACM input/output style.
 acm-master/
 ├── README.md             # 中文说明文档，GitHub 默认展示
 ├── README.en.md          # 英文说明文档
+├── LICENSE               # MIT License
 ├── SKILL.md              # 源 Skill 说明，作为两套平台包的内容来源
 ├── .codex/
 │   └── skills/
@@ -229,7 +230,7 @@ acm-master/
 - 将英文文档保留为 `README.en.md`，并通过页眉语言切换链接访问。
 - 将 `.codex/skills/acm-master` 作为 Codex 用户可直接使用或复制的目录。
 - 将 `.claude/skills/acm-master` 作为 Claude Code 用户可直接使用或复制的目录。
-- 如果计划公开分发，建议补充 `LICENSE` 文件，明确使用和再分发规则。
+- 项目已使用 MIT License 开源，`LICENSE` 文件位于仓库根目录。
 - 发布前可再次检查 `SKILL.md` 和 `agents/openai.yaml` 中的名称、描述和默认提示是否一致。
 
 ## 维护说明
@@ -242,4 +243,4 @@ acm-master/
 
 ## License
 
-当前 Skill 目录未提供独立的 `LICENSE` 文件。对外分发或开源前，请先补充明确的许可证文本。
+本项目使用 MIT License 开源。完整许可证文本见 [LICENSE](./LICENSE)。
