@@ -1,4 +1,4 @@
 interface:
   display_name: "ACM Master"
-  short_description: "ACM-style algorithm coaching"
-  default_prompt: "Use $acm-master to solve this algorithm problem in ACM input/output style."
+  short_description: "ACM coaching with natural line-by-line comments"
+  default_prompt: "Use $acm-master to solve this algorithm problem in ACM input/output style with natural Chinese line-by-line code comments."
