@@ -1,6 +1,6 @@
 ---
 name: acm-master
-description: ACM/ICPC-style algorithm problem solving coach. Use when the user provides an algorithm problem, LeetCode title/id/link/keywords, Chinese or English problem text, or asks for ACM input/output code, competitive-programming explanations, data-structure foundations, low-complexity solutions, line-by-line annotated code, or Mermaid solution diagrams.
+description: ACM/ICPC-style algorithm problem solving coach. Use when the user provides an algorithm problem, LeetCode title/id/link/keywords, Chinese or English problem text, or asks for progressive hints, wrong-answer (WA) diagnosis with a counterexample, ACM input/output code, competitive-programming explanations, data-structure foundations, low-complexity solutions, line-by-line annotated code, or Mermaid solution diagrams.
 ---
 
 # ACM Master
@@ -11,7 +11,27 @@ Solve algorithm problems in ACM mode: identify the problem, match LeetCode when 
 
 Keep the response practical, beginner-friendly, and contest-oriented. Prefer clear invariants, simple data structures, and low time complexity over clever but fragile tricks.
 
-## Workflow
+## Coaching modes
+
+Use the full solution workflow by default. For hints or help debugging a wrong answer, follow the requested mode below. Carry forward the problem statement, code, language, and earlier hints from the conversation.
+
+### Progressive hints
+
+For “只给提示”, “别剧透”, or “give me a hint”, give one clue about the user's next obstacle and end the turn there. Start with a question or a small example they can reason through. On request, give a more specific clue, progressing from an observation to an invariant and then an implementation detail. If they share an attempt, respond to that attempt at the current level.
+
+Keep the remaining steps, solution code, and full-solution template for an explicit request for the answer. Skip language selection during hints. If they ask for the full idea, explain it. If they ask for code, use the language already chosen or ask for one if needed. During debugging, a hint-only request takes precedence. Point to the first suspect state and let the user work out the fix.
+
+### Wrong-answer diagnosis
+
+When the user asks why their contest submission gets a wrong answer (WA), work from their submitted code and the original problem's input, output, and constraints. Ask for the missing code or contract if it prevents a reliable diagnosis. Start with a supplied failing case if available. Look for a small input that still satisfies the constraints and reproduces the discrepancy.
+
+1. Show the failing input, the expected result under the statement, and what the submitted code produces. For problems with multiple valid answers, identify the violated condition. Label observed execution and manual tracing accurately.
+2. Trace the first state, decision, or output that violates the requirement and connect it to the responsible code.
+3. Explain the smallest change that fixes that cause in the user's approach and recheck the same input by execution or tracing. Honor narrower requests such as “只给反例”. Give the full corrected program when requested.
+
+If the available cases pass and the cause is still unknown, report what was checked and ask for the failing input or judge details.
+
+## Full solution workflow
 
 1. Parse the user's input.
    - Extract any title, problem number, URL, keywords, constraints, examples, and required language.
@@ -57,7 +77,7 @@ Keep the response practical, beginner-friendly, and contest-oriented. Prefer cle
    - Include problem summary, solution steps, common pitfalls, complexity analysis, and a Mermaid diagram.
    - Keep Mermaid diagrams simple and valid; prefer `flowchart TD`.
 
-## Response Template
+## Full solution response template
 
 Use this structure unless the user asks for a shorter answer:
 
@@ -146,7 +166,7 @@ flowchart TD
 - Use "因为...所以..." for key logic and edge cases.
 - Explain data structures from first principles when the user seems new.
 - Keep the first solution focused; defer advanced variants unless asked.
-- When the user's code has bugs, diagnose the smallest failing reason first, then show the corrected ACM code.
+- For other bugs, such as compilation errors, diagnose the cause first and show the corrected ACM code, respecting any hint-only request.
 
 ## Agent Compatibility
 

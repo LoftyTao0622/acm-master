@@ -21,7 +21,7 @@
 
 `acm-master` is a Skill for algorithm practice and competitive-programming style problem solving. It identifies a user's problem statement, title, problem id, LeetCode link, or keywords, then tries to match the problem on LeetCode first. If no reliable match is found, it analyzes the problem from data-structure and algorithm fundamentals and recommends a low-complexity ACM-friendly solution.
 
-The Skill is designed to produce a complete learning loop: problem classification, solution recommendation, complexity analysis, language selection, ACM-mode code, line-by-line comments, cause-and-effect explanations, pitfalls, and a Mermaid solution diagram.
+When you're stuck, ask for one hint and keep working. If your submission received Wrong Answer (WA), ask for a small input that explains the failure. A full walkthrough covers the algorithm, its complexity, ACM-style code, common pitfalls, and a Mermaid diagram.
 
 ## Use Cases
 
@@ -89,6 +89,8 @@ Then invoke it in Claude Code:
 | LeetCode matching | Prioritizes URL, id, title, slug, examples, and constraints when matching LeetCode problems |
 | Pattern classification | Labels arrays, hash maps, two pointers, sliding window, prefix sums, stacks, queues, trees, graphs, DP, greedy, and more |
 | Solution recommendation | Chooses a balanced solution that is low-complexity and easy to learn |
+| Progressive hints | Gives one hint per request and lets you decide when to see the next hint or the full solution |
+| Wrong Answer diagnosis | Finds a small valid input, compares expected output with program behavior, and checks a minimal fix |
 | ACM code | Generates standard input/output code instead of LeetCode-only function signatures |
 | Line-by-line explanation | Adds code comments and explains the code line by line |
 | Causal reasoning | Explains key logic and edge cases using "because... therefore..." reasoning |
@@ -98,7 +100,9 @@ Then invoke it in Claude Code:
 
 ```mermaid
 flowchart TD
-    A["User provides an algorithm problem"] --> B["Extract id, title, keywords, constraints, and examples"]
+    A{"What help do you want?"} -->|Hint| P["Give one hint and wait"]
+    A -->|Debug a submission| Q["Check the statement and code, then reproduce and locate the error"]
+    A -->|Full solution| B["Extract id, title, keywords, constraints, and examples"]
     B --> C{"Can it be matched on LeetCode?"}
     C -->|Yes| D["Classify the pattern and recommend the standard best solution"]
     C -->|No| E["Analyze from data-structure fundamentals"]
@@ -114,7 +118,11 @@ flowchart TD
 
 ## Output Format
 
-During the first analysis pass, the Skill provides problem recognition and a recommended solution. If the user has not specified a language, it asks for one:
+**Hints.** You can start without choosing a programming language. Each reply gives one hint. Ask for another when you're ready. You'll get the full solution only when you explicitly request it. You can ask for hints while debugging a submission, too.
+
+**Wrong Answer diagnosis.** Share the input and output requirements, constraints, and your code. If the statement, code, or reproduction details are missing, the Skill asks for what it needs. Once it can reproduce the error, it gives a small valid counterexample, the expected output, and the program's behavior. It labels results as observed in a run or inferred by tracing the code, identifies the first incorrect step, and checks a minimal fix against the same input.
+
+**Full solution.** The Skill identifies the problem and recommends an approach. If code is needed and you haven't specified a programming language, it asks which one to use.
 
 ```markdown
 **题目识别**
@@ -130,7 +138,7 @@ During the first analysis pass, the Skill provides problem recognition and a rec
 你想要哪种语言的 ACM 模式代码？Java / Python / C / C++ / Go / JavaScript / 其他？
 ```
 
-After the user chooses a language, the Skill continues with:
+The code and explanation in a full walkthrough follow this format.
 
 ```markdown
 **ACM 代码**
@@ -212,6 +220,28 @@ acm-master/
 
 ## Examples
 
+**Work through a problem one hint at a time**
+
+```text
+Use $acm-master to help me work through LeetCode 1, Two Sum. Give me just the first hint.
+```
+
+Reply “one more hint” to go a step further, or share an idea you want to discuss.
+
+**Diagnose a Wrong Answer**
+
+```text
+Use $acm-master to find a counterexample. The input is one line of 1 to 100 integers.
+Print the largest integer. My Python submission got WA. What caused it, and what's the smallest fix?
+
+nums = list(map(int, input().split()))
+print(max([0] + nums))
+```
+
+A single negative number such as `-1` is enough to check the diagnosis. The answer should be `-1`, but the extra `0` becomes the largest value.
+
+**Ask for a full solution**
+
 ```text
 Use $acm-master to solve LeetCode 1 Two Sum in ACM mode. Explain the idea first.
 ```
@@ -239,7 +269,7 @@ Use $acm-master to generate C++ ACM code and explain which data-structure fundam
 - After changing the source `SKILL.md`, copy it to `.codex/skills/acm-master/SKILL.md` and `.claude/skills/acm-master/SKILL.md`.
 - Update `agents/openai.yaml` when the display name, short description, or default prompt changes.
 - After changing `agents/openai.yaml`, copy it to `.codex/skills/acm-master/agents/openai.yaml`.
-- This Skill currently has no scripts, templates, or extra resource files.
+- After changing the hint or diagnosis rules, check the responses against the [conversation regression cases](./tests/coaching-modes.md).
 
 ## License
 
